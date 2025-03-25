@@ -1,4 +1,4 @@
-CREATE DATABASE contacts 
+CREATE DATABASE contacts;
 \c contacts
 
 CREATE TABLE "contact list" (
