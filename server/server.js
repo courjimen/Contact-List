@@ -20,6 +20,8 @@ app.get('/contacts', async (req, res) => {
     }
 });
 
+//need to create route to display fave contacts
+
 app.listen(port, () => {
     console.log(`Server started on ${port}`);
 } )

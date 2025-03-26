@@ -29,7 +29,8 @@ function Contacts() {
 
             <ViewContact contact={clickedContact}/>
 
-            <button>Add new contact</button>
+            {/* Add a plus here to add */}
+            {/* <button>Add new contact</button> */}
             </>
     )
 }
