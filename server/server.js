@@ -21,5 +21,5 @@ app.get('/contacts', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server stated on ${port}`);
+    console.log(`Server started on ${port}`);
 } )

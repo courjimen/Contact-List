@@ -33,8 +33,9 @@
     "yargs-parser": "^21.1.1"
   },
   "scripts": {
+    "type": "module",
     "test": "vitest",
-    "client": "vite",
+    "client": "cd client && vite",
     "server": "nodemon server/server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
