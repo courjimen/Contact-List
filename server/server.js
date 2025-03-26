@@ -20,6 +20,20 @@ app.get('/contacts', async (req, res) => {
     }
 });
 
+//create route to POST/update new contacts
+app.post('/contacts', async (req, res) => {
+    const {first_name, last_name, phone, email, notes} = req.body;
+
+    try {
+        const result = await pool.query('INSERT INTO "contact list" (first_name, last_name, phone, email, notes) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [first_name, last_name, phone, email, notes]
+        );
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error('Error adding contact: ', err);
+        res.sendStatus(500)
+    }})
+
 //need to create route to display fave contacts
 
 app.listen(port, () => {

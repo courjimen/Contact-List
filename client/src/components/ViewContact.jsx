@@ -19,7 +19,7 @@ function ViewContact({ contact }) {
                 <input
                     type='checkbox' />
                 Add Favorite
-            </label>
+            </label> <br/>
             
             <button>Delete Contact</button>
         </>
