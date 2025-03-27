@@ -9,7 +9,8 @@ function CreateContact({ contactAdded }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        alert('Contact Added!')
+    
         try {
             const res = await fetch('http://localhost:3000/contacts', {
                 method: 'POST',
