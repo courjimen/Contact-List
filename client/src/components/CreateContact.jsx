@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import ViewContact from './ViewContact';
 
 function CreateContact({ contactAdded }) {
     const [firstName, setFirstName] = useState('');

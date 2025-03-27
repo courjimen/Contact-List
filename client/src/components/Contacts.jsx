@@ -40,7 +40,7 @@ function Contacts() {
             }
         } else {
             setFaves(faves.filter((fave) => fave.contact_id !== contactId));
-            fetch(`http://localhost:3000/favorites/${contacts.find((contact) => contact.contact_id === contactId).phone}`,{
+            fetch(`http://localhost:3000/faves/${contacts.find((contact) => contact.contact_id === contactId).phone}`,{
                 method: 'DELETE',
             })
             .catch(e=> console.log(e))
@@ -49,6 +49,8 @@ function Contacts() {
 
     return (
         <>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div>
             <h1>Contact List</h1>
             <ul>
                 {contacts.map((contact) => (
@@ -57,13 +59,10 @@ function Contacts() {
                 </li>
             ))}
             </ul>
-
             <ViewContact contact={clickedContact} onFavoriteChange={handleFave} />
+            </div>
 
-            <button onClick={() => setCreateContact(true)}>Add New Contact</button>
-
-            {createContact && <CreateContact contactAdded={handleAddContact}/>}
-
+            <div>
             <h1>Fave Contacts</h1>
             <ul>
                 {faves.map((fave) => (
@@ -72,6 +71,14 @@ function Contacts() {
                     </li>
                 ))}
             </ul>
+            </div>
+            </div>
+
+            <button onClick={() => setCreateContact(true)}>Add New Contact</button>
+
+            {createContact && <CreateContact contactAdded={handleAddContact}/>}
+           
+           
             </>
     );
 }
