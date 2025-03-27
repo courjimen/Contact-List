@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ViewContact from './ViewContact';
 
 function CreateContact({ contactAdded }) {
     const [firstName, setFirstName] = useState('');
@@ -71,11 +72,11 @@ function CreateContact({ contactAdded }) {
                     value={email}
                     placeholder='text@email.com'
                     onChange={(e) => setEmail(e.target.value)} />
-
-                <label>Notes: </label>
+                <br/>
+                <br/>
                 <textarea
                     value={notes}
-                    placeholder='Enter text'
+                    placeholder='Enter notes'
                     onChange={(e) => setNotes(e.target.value)} />
             
             {/* Add a plus here to add */}

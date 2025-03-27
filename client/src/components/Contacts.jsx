@@ -6,11 +6,13 @@ function Contacts() {
     const [contacts, setContacts] = useState([]);
     const [clickedContact, setClickContact] = useState(null);
     const [createContact, setCreateContact] = useState(false);
+    const [faves, setFaves] = useState([]);
+
     useEffect(() => {
         fetch('http://localhost:3000/contacts')
             .then((res) => res.json())
             .then((data) => setContacts(data))
-            .catch((err) => console.err('Error grabbing contacts: ', err));
+            .catch((err) => console.error('Error grabbing contacts: ', err));
     }, []);
 
     const handleViewContact = (contact) => {
@@ -21,6 +23,29 @@ function Contacts() {
         setContacts([...contacts, newContact]);
         setCreateContact(false);
     }
+
+    const handleFave = (contactId, isFave) => {
+        if (!faves.some((fave) => fave.contact_id === contactId )) {
+            const faveContact = contacts.find((contact)  => contact.contact_id === contactId);
+            if (faveContact) {
+                setFaves([...faves, faveContact]);
+                fetch(`http://localhost:3000/faves`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({fave_number: faveContact.phone})
+                })
+                .catch(e=> console.log(e))
+            }
+        } else {
+            setFaves(faves.filter((fave) => fave.contact_id !== contactId));
+            fetch(`http://localhost:3000/favorites/${contacts.find((contact) => contact.contact_id === contactId).phone}`,{
+                method: 'DELETE',
+            })
+            .catch(e=> console.log(e))
+        }
+    };
 
     return (
         <>
@@ -33,11 +58,20 @@ function Contacts() {
             ))}
             </ul>
 
-            <ViewContact contact={clickedContact}/>
+            <ViewContact contact={clickedContact} onFavoriteChange={handleFave} />
 
             <button onClick={() => setCreateContact(true)}>Add New Contact</button>
 
             {createContact && <CreateContact contactAdded={handleAddContact}/>}
+
+            <h1>Fave Contacts</h1>
+            <ul>
+                {faves.map((fave) => (
+                    <li key={fave.contact_id}>
+                        {fave.first_name} {fave.last_name}: {fave.phone}
+                    </li>
+                ))}
+            </ul>
             </>
     );
 }
