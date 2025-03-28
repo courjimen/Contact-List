@@ -1,15 +1,35 @@
 import React, { useState, useEffect } from 'react'
 
-function ViewContact({ contact, onFavoriteChange }) {
+function ViewContact({ contact, onFavoriteChange, onDelete }) {
     const [isFave, setIsFave] = useState(false);
 
     useEffect(() => {
         setIsFave(false);
     }, [contact])
+
     const addFave = (e) => {
         const checked = e.target.checked;
         setIsFave(checked);
         onFavoriteChange(contact.contact_id, checked);
+    }
+
+    const handleDelete = async () => {
+        try {
+            const res = await fetch(`http://localhost:3000/contacts/${contact.contact_id}`, {
+                method: 'DELETE',
+            });
+
+            if (res.ok) {
+                onDelete(contact.contact_id);
+                alert('Contact removed!')
+            } else {
+                console.error('Could not delete contact: ', res.statusText)
+                alert('Could not delete contact. Please make sure your contact is in the contact list')
+            }
+        } catch (err) {
+            console.error('Error deleting contact:', err)
+            alert('Error removing contact. Try again')
+        }
     }
 
     if (!contact) {
@@ -34,7 +54,7 @@ function ViewContact({ contact, onFavoriteChange }) {
                 Add Favorite
             </label> <br/>
             
-            <button>Delete Contact</button>
+            <button onClick={handleDelete}>Delete Contact</button>
         </>
     )
 }

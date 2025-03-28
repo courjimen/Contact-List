@@ -47,6 +47,10 @@ function Contacts() {
         }
     };
 
+    const handleDeleteContact = (contactId) => {
+        setContacts(contacts.filter(contact => contact.contact_id !== contactId));
+        setClickContact(null);
+    }
     return (
         <>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
@@ -59,7 +63,7 @@ function Contacts() {
                 </li>
             ))}
             </ul>
-            <ViewContact contact={clickedContact} onFavoriteChange={handleFave} />
+            <ViewContact contact={clickedContact} onFavoriteChange={handleFave} onDelete={handleDeleteContact}/>
             </div>
 
             <div>
