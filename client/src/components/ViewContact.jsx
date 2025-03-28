@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import '../App.css'
 
-function ViewContact({ contact, onFavoriteChange, onDelete }) {
+function ViewContact({ contact, onFavoriteChange, onDelete, onUpdate}) {
     const [isFave, setIsFave] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState('#ffe4e1')
+    const [editedContact, setEditedContact] = useState(contact);
 
     useEffect(() => {
         setIsFave(false);
         setBackgroundColor(getRandomLightColor());
+        setEditedContact(contact);
     }, [contact]);
 
     const addFave = (e) => {
@@ -33,6 +35,31 @@ function ViewContact({ contact, onFavoriteChange, onDelete }) {
         }
     }
 
+    const handleSave = async () => {
+        try {
+            const res = await fetch(`http://localhost:3000/contacts/${contact.contact_id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(editedContact),
+            });
+
+            if (res.ok) {
+                onUpdate(editedContact); // Call the onUpdate prop with updated data
+                alert('Contact updated!');
+            } else {
+                console.error('Failed to update contact');
+                alert('Failed to update contact');
+            }
+        } catch (err) {
+            console.error('Error updating contact:', err);
+            alert('Error updating contact. Try again');
+        }
+    };
+
+    const handleInputChange = (e) => {
+        setEditedContact({ ...editedContact, [e.target.name]: e.target.value });
+    };
+
     if (!contact) {
         return null;
     }
@@ -40,11 +67,41 @@ function ViewContact({ contact, onFavoriteChange, onDelete }) {
     return (
         <div className='view-contact-container' style={{ backgroundColor }}>
             <h1>Contact Details</h1>
-            <p>Name: {contact.first_name} {contact.last_name}</p>
-            <p>Phone: {contact.phone}</p>
-            <p>Email: {contact.email}</p>
-            <p>Notes: {contact.notes}</p>
-
+            <label htmlFor='firstName'>First Name:</label>
+            <input
+                name="first_name"
+                value={editedContact.first_name}
+                onChange={handleInputChange}
+                placeholder="First Name"
+            />
+            <label htmlFor='firstName'>Last Name:</label>
+            <input
+                name="last_name"
+                value={editedContact.last_name}
+                onChange={handleInputChange}
+                placeholder="Last Name"
+            />
+            <label htmlFor='firstName'>Number:</label>
+            <input
+                name="phone"
+                value={editedContact.phone}
+                onChange={handleInputChange}
+                placeholder="Phone"
+            />
+            <label htmlFor='firstName'>Email:</label>
+            <input
+                name="email"
+                value={editedContact.email}
+                onChange={handleInputChange}
+                placeholder="Email"
+            />
+            <label htmlFor='firstName'>Notes:</label>
+            <textarea
+                name="notes"
+                value={editedContact.notes}
+                onChange={handleInputChange}
+                placeholder="Notes"
+            />
 
             {/* Add a star for fave and trashbin for delete */}
             <label>
@@ -54,6 +111,8 @@ function ViewContact({ contact, onFavoriteChange, onDelete }) {
                     type='checkbox' />
                 Add Favorite
             </label> <br />
+
+            <button onClick={handleSave}>Save</button>
 
             <button onClick={handleDelete}>Delete Contact</button>
         </div>

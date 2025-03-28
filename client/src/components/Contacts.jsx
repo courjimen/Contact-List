@@ -18,6 +18,14 @@ function Contacts() {
             .catch((err) => console.error('Error grabbing contacts: ', err));
     }, []);
 
+		const handleUpdateContact = (updatedContact) => {
+			setContacts(prevContacts =>
+					prevContacts.map(contact =>
+							contact.contact_id === updatedContact.contact_id ? updatedContact : contact
+					)
+			);
+			setClickContact(updatedContact)
+	};
     const handleViewContact = (contact) => {
         setClickContact(contact);
     }
@@ -85,8 +93,10 @@ function Contacts() {
                             </li>
                         ))}
                     </ul>
-                    <ViewContact contact={clickedContact} onFavoriteChange={handleFave} onDelete={handleDeleteContact} />
-                </div>
+										{clickedContact && (
+                    <ViewContact contact={clickedContact} onFavoriteChange={handleFave} onDelete={handleDeleteContact} onUpdate={handleUpdateContact} />
+										)}
+										</div>
 
                 <div>
                     <h1>Fave Contacts</h1>
