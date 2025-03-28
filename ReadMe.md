@@ -7,16 +7,16 @@ Let's create some contacts! This app is designed to create a contact list and st
 - [Installation](#installation-instructions)
 - [Demo](#demo)
 
-## What You'll Need
+## What You'll Need ⚙️
 
 Prior to running this project, here are the pre-reqs you'll need. Please make sure you've got these installed on your computer:
 
-* **Node.js:** This runs the app. You'll want version 16 or later.
-* **npm** Node Package Manager.
-* **PostgreSQL:** This is where we keep all our contact data. Make sure it's up and running! I provide some mock data to get you started in my db.sql file.
+* **Node.js:** 🌐 This runs the app. You'll want version 16 or later.
+* **npm** 🔧 Node Package Manager.
+* **PostgreSQL:🗄️ ** This is where we keep all our contact data. Make sure it's up and running! I provide some mock data to get you started in my db.sql file.
 * Keep in mind I use VS Code for my code editor and a Mac Computer
 
-## INSTALLATION INSTRUCTIONS
+## INSTALLATION INSTRUCTIONS 🚀
 
 1. Clone my project here: https://github.com/courjimen/Contact-List.git
 
@@ -51,4 +51,4 @@ psql -U your_username -d your_database_name
 
 - Update your credentials in the db.js file to properly link your database to the server.
 
-## Demo
+## Demo ✏️🗑️📞
