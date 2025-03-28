@@ -52,3 +52,11 @@ psql -U your_username -d your_database_name
 - Update your credentials in the db.js file to properly link your database to the server.
 
 ## Demo
+- You should see a homepage with search bar and list of contacts from the db.sql file
+![](/images/homepage.png)
+
+- If you would like to edit a specific contact, you can click on the name and this form will pop up
+![](/images/contact.png)
+
+- To add a new contact click the button and it will open below like so
+![](/images/addcontact.png)

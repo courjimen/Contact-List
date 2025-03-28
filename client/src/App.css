@@ -20,13 +20,13 @@
     grid-column: 1 / 3;
     text-align: center;
 }
-/* 
+
 .view-contact-container p {
     font-size: 1em;
     margin-bottom: 10px;
     color: #555;
     line-height: 1.5;
-} */
+}
 
 .view-contact-container label {
    align-self: center;
