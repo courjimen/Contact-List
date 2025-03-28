@@ -9,6 +9,7 @@ function Contacts() {
     const [createContact, setCreateContact] = useState(false);
     const [faves, setFaves] = useState([]);
 		const [searchTerm, setSearchTerm] = useState('');
+		
 
     useEffect(() => {
         fetch('http://localhost:3000/contacts')

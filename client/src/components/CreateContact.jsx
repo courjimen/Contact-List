@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-
 function CreateContact({ contactAdded }) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -56,20 +55,25 @@ function CreateContact({ contactAdded }) {
 
     return (
         <>
+        <div className='add-contact-form'>
             <h1>Add Contact</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='contact-form'>
                 <input
                     type='text'
                     value={firstName}
                     placeholder='First Name'
                     onChange={(e) => setFirstName(e.target.value)}
-                    required />
+                    required 
+                    className='contact-input'
+                    />
 
                 <input
                     type='text'
                     value={lastName}
                     placeholder='Last Name'
-                    onChange={(e) => setLastName(e.target.value)} />
+                    onChange={(e) => setLastName(e.target.value)} 
+                    className='contact-input'
+                    />
 
 
                 <input
@@ -77,25 +81,32 @@ function CreateContact({ contactAdded }) {
                     value={phone}
                     placeholder='XXX-XXX-XXXX'
                     onChange={(e) => setPhone(e.target.value)}
-                    required />
-                {phoneError && <p style={{ color: 'red' }}>{phoneError}</p>}
+                    required 
+                    className='contact-input' 
+                    />
+                {phoneError && <p className="phone-error">{phoneError}</p>}
 
                 <input
                     type='email'
                     value={email}
                     placeholder='text@email.com'
-                    onChange={(e) => setEmail(e.target.value)} />
+                    onChange={(e) => setEmail(e.target.value)} 
+                    className='contact-input'
+                    />
 
                 <br />
                 <br />
                 <textarea
                     value={notes}
                     placeholder='Enter notes'
-                    onChange={(e) => setNotes(e.target.value)} />
+                    onChange={(e) => setNotes(e.target.value)} 
+                    className='contact-textarea'
+                    />
 
                 {/* Add a plus here to add */}
-                <button type="submit">Add!</button>
+                <button type="submit" className='contact-submit'>Add!</button>
             </form>
+            </div>
         </>
     )
 }

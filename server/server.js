@@ -20,7 +20,7 @@ app.get('/contacts', async (req, res) => {
     }
 });
 
-//create route to POST/update new contacts
+//create route to POST/add new contact
 app.post('/contacts', async (req, res) => {
     const {first_name, last_name, phone, email, notes} = req.body;
 
@@ -49,6 +49,29 @@ app.delete('/contacts/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' })
     }
 })
+
+//updating current contacts
+app.put('/contacts/:id', async (req, res) => {
+    const { first_name, last_name, phone, email, notes } = req.body;
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query(
+            'UPDATE "contact list" SET first_name = $1, last_name = $2, phone = $3, email = $4, notes = $5 WHERE contact_id = $6 RETURNING *',
+            [first_name, last_name, phone, email, notes, id]
+        );
+
+        if (result.rowCount > 0) {
+            res.json(result.rows[0]);
+        } else {
+            res.status(404).json({ message: 'Contact not found' });
+        }
+    } catch (err) {
+        console.error('Error updating contact:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server started on ${port}`);
 } )
