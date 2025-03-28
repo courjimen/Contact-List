@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+
 function ViewContact({ contact, onFavoriteChange, onDelete }) {
     const [isFave, setIsFave] = useState(false);
 

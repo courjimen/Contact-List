@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ViewContact from './ViewContact'
 import CreateContact from './CreateContact';
+import { FiEdit, FiStar } from 'react-icons/fi';
 
 function Contacts() {
     const [contacts, setContacts] = useState([]);
@@ -25,8 +26,8 @@ function Contacts() {
     }
 
     const handleFave = (contactId, isFave) => {
-        if (!faves.some((fave) => fave.contact_id === contactId )) {
-            const faveContact = contacts.find((contact)  => contact.contact_id === contactId);
+        if (!faves.some((fave) => fave.contact_id === contactId)) {
+            const faveContact = contacts.find((contact) => contact.contact_id === contactId);
             if (faveContact) {
                 setFaves([...faves, faveContact]);
                 fetch(`http://localhost:3000/faves`, {
@@ -34,16 +35,16 @@ function Contacts() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({fave_number: faveContact.phone})
+                    body: JSON.stringify({ fave_number: faveContact.phone })
                 })
-                .catch(e=> console.log(e))
+                    .catch(e => console.log(e))
             }
         } else {
             setFaves(faves.filter((fave) => fave.contact_id !== contactId));
-            fetch(`http://localhost:3000/faves/${contacts.find((contact) => contact.contact_id === contactId).phone}`,{
+            fetch(`http://localhost:3000/faves/${contacts.find((contact) => contact.contact_id === contactId).phone}`, {
                 method: 'DELETE',
             })
-            .catch(e=> console.log(e))
+                .catch(e => console.log(e))
         }
     };
 
@@ -53,37 +54,44 @@ function Contacts() {
     }
     return (
         <>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            <div>
-            <h1>Contact List</h1>
-            <ul>
-                {contacts.map((contact) => (
-                <li key={contact.contact_id} onClick={() => handleViewContact(contact)} style={ {cursor: 'pointer'} }> 
-                    {contact.first_name} {contact.last_name}: {contact.phone}
-                </li>
-            ))}
-            </ul>
-            <ViewContact contact={clickedContact} onFavoriteChange={handleFave} onDelete={handleDeleteContact}/>
-            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div>
+                    <h1>Contact List</h1>
+                    <ul>
+                        {contacts.map((contact) => (
+                            <li key={contact.contact_id}
+                                onClick={() => handleViewContact(contact)}
+                                style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
 
-            <div>
-            <h1>Fave Contacts</h1>
-            <ul>
-                {faves.map((fave) => (
-                    <li key={fave.contact_id}>
-                        {fave.first_name} {fave.last_name}: {fave.phone}
-                    </li>
-                ))}
-            </ul>
-            </div>
+                                <FiEdit style={{ marginRight: '8px' }} />
+                                {contact.first_name} {contact.last_name}: {contact.phone}
+                            </li>
+                        ))}
+                    </ul>
+                    <ViewContact contact={clickedContact} onFavoriteChange={handleFave} onDelete={handleDeleteContact} />
+                </div>
+
+                <div>
+                    <h1>Fave Contacts</h1>
+                    <ul>
+                        {faves.map((fave) => (
+                            <li key={fave.contact_id}
+                                style={{ display: 'flex', alignItems: 'center' }}>
+
+                                <FiStar style={{ marginRight: '8px' }} />
+                                {fave.first_name} {fave.last_name}: {fave.phone}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
 
             <button onClick={() => setCreateContact(true)}>Add New Contact</button>
 
-            {createContact && <CreateContact contactAdded={handleAddContact}/>}
-           
-           
-            </>
+            {createContact && <CreateContact contactAdded={handleAddContact} />}
+
+
+        </>
     );
 }
 

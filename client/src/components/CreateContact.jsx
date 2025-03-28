@@ -1,16 +1,27 @@
 import React, { useState } from 'react'
 
+
 function CreateContact({ contactAdded }) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [notes, setNotes] = useState('');
+    const [phone, setPhone] = useState('');
+    const [phoneError, setPhoneError] = useState('');
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('Contact Added!')
-    
+
+        if (!/^\d{3}-?\d{3}-?\d{4}$/.test(phone)) {
+            setPhoneError('Phone number must be in the format XXX-XXX-XXXX or XXXXXXXXXX.');
+            return;
+        }
+
+        setPhoneError('');
+
+        
+
         try {
             const res = await fetch('http://localhost:3000/contacts', {
                 method: 'POST',
@@ -26,7 +37,7 @@ function CreateContact({ contactAdded }) {
                 }),
             });
 
-            if (!response.ok) {
+            if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`)
             }
 
@@ -40,6 +51,7 @@ function CreateContact({ contactAdded }) {
         } catch (err) {
             console.error('Error adding contact: ', err);
         }
+        alert('Contact Added!')
     };
 
     return (
@@ -59,27 +71,30 @@ function CreateContact({ contactAdded }) {
                     placeholder='Last Name'
                     onChange={(e) => setLastName(e.target.value)} />
 
+
                 <input
                     type='tel'
                     value={phone}
-                    placeholder='Phone'
+                    placeholder='XXX-XXX-XXXX'
                     onChange={(e) => setPhone(e.target.value)}
                     required />
+                {phoneError && <p style={{ color: 'red' }}>{phoneError}</p>}
 
                 <input
                     type='email'
                     value={email}
                     placeholder='text@email.com'
                     onChange={(e) => setEmail(e.target.value)} />
-                <br/>
-                <br/>
+
+                <br />
+                <br />
                 <textarea
                     value={notes}
                     placeholder='Enter notes'
                     onChange={(e) => setNotes(e.target.value)} />
-            
-            {/* Add a plus here to add */}
-            <button type="submit">Add!</button>
+
+                {/* Add a plus here to add */}
+                <button type="submit">Add!</button>
             </form>
         </>
     )
