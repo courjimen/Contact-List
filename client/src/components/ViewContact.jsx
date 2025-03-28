@@ -23,10 +23,8 @@ function ViewContact({ contact, onFavoriteChange, onDelete }) {
             if (res.ok) {
                 onDelete(contact.contact_id);
                 alert('Contact removed!')
-            } else {
-                console.error('Could not delete contact: ', res.statusText)
-                alert('Could not delete contact. Please make sure your contact is in the contact list')
-            }
+            } 
+            
         } catch (err) {
             console.error('Error deleting contact:', err)
             alert('Error removing contact. Try again')

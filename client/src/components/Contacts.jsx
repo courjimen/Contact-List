@@ -8,6 +8,7 @@ function Contacts() {
     const [clickedContact, setClickContact] = useState(null);
     const [createContact, setCreateContact] = useState(false);
     const [faves, setFaves] = useState([]);
+		const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetch('http://localhost:3000/contacts')
@@ -52,13 +53,28 @@ function Contacts() {
         setContacts(contacts.filter(contact => contact.contact_id !== contactId));
         setClickContact(null);
     }
+
+		const filteredContacts = contacts.filter((contact) =>
+			`${contact.first_name} ${contact.last_name} ${contact.phone}`
+					.toLowerCase()
+					.includes(searchTerm.toLowerCase())
+	);
+
     return (
         <>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div>
                     <h1>Contact List</h1>
+
+                    <input
+                        type="text"
+                        placeholder="Search contacts..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ marginBottom: '10px' }}
+                    />
                     <ul>
-                        {contacts.map((contact) => (
+                        {filteredContacts.map((contact) => (
                             <li key={contact.contact_id}
                                 onClick={() => handleViewContact(contact)}
                                 style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>

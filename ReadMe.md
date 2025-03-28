@@ -29,13 +29,13 @@ npm install concurrently --save-dev
 Run these commands in my server folder
 ```bash
 npm install
-npm install express cors pg
-mpm install nodemon 
+npm install express cors pg nodemon 
 ```
 
 Run these commands in my client folder
 ```bash
 npm install react react-dom react-icons
+npm install vitest --save-dev
 ```
 
 2. Grab the data from your db.sql file into your local PostgreSQL database, you'll need to follow these steps:
