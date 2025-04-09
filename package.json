@@ -35,7 +35,7 @@
   "scripts": {
     "type": "module",
     "test": "vitest",
-    "client": "cd client && vite",
+    "client": "cd client && npm run vite-client",
     "server": "nodemon server/server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },

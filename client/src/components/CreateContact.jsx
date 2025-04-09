@@ -57,7 +57,7 @@ function CreateContact({ contactAdded }) {
         <>
         <div className='add-contact-form'>
             <h1>Add Contact</h1>
-            <form onSubmit={handleSubmit} className='contact-form'>
+            <form role='form' onSubmit={handleSubmit} className='contact-form'>
                 <input
                     type='text'
                     value={firstName}
